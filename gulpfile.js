@@ -8,7 +8,7 @@ const sourcemaps = require("gulp-sourcemaps");
 const rename = require("gulp-rename");
 const cleancss = require("gulp-clean-css");
 const browserSync = require("browser-sync").create();
-const runSequence = require('run-sequence');
+const runSequence = require("run-sequence");
 
 /*  As a developer, I should be able to run the gulp scripts 
 command at the command line to concatenate, minify, 
@@ -87,8 +87,7 @@ gulp.task("clean", () => {
 at the command line to run the clean, scripts, styles, and images tasks 
 with confidence that the clean task completes before the other commands. */
 gulp.task("build", () => {
-//   return gulp.start(["scripts", "styles", "images", "htmlAndIcons"]);
-    return runSequence('clean', ["scripts", "styles", "images"], "htmlAndIcons");
+  return runSequence("clean", ["scripts", "styles", "images"], "htmlAndIcons");
 });
 
 /* As a developer, I should be able to run the gulp command at the command line 
@@ -99,22 +98,18 @@ When there is a change to one of the .scss files, the gulp styles command is run
 and the files are compiled, concatenated, and minified to the dist folder. 
 My project should then reload in the browser, displaying the changes. */
 
-gulp.task('sassWatch', ['styles'], function() {
+gulp.task("sassWatch", ["styles"], function() {
   browserSync.reload();
 });
 
-gulp.task('runServer', () => {
+gulp.task("default", () => {
+  runSequence("clean", ["scripts", "styles", "images"], "htmlAndIcons", () => {
     return browserSync.init({
-        server: {
-            baseDir: './dist'
-        },
-
-        reloadDelay: 1000
+      server: {
+        baseDir: "./dist"
+      },
+      reloadDelay: 1000
     });
-
-});
-
-gulp.task('default', () => {
-    runSequence('build', 'runServer');
-  gulp.watch(["sass/**/*.scss"], ["sassWatch"]);
+  });
+  gulp.watch(["sass/**/*.scss", "sass/**/*.sass"], ["sassWatch"]);
 });
