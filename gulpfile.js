@@ -23,7 +23,7 @@ gulp.task("scripts", () => {
     .pipe(concat("all.min.js"))
     .pipe(uglify())
     .pipe(sourcemaps.write("./"))
-    .pipe(gulp.dest("dist/js"));
+    .pipe(gulp.dest("dist/scripts"));
 });
 
 gulp.task("htmlAndIcons", () => {
@@ -80,7 +80,7 @@ gulp.task("images", () => {
 /* As a developer, I should be able to run the gulp clean command 
 at the command line to delete all of the files and folders in the dist folder. */
 gulp.task("clean", () => {
-  return gulp.src(["dist"], { read: false }).pipe(clean());
+  return gulp.src(["dist/*"], { read: false }).pipe(clean());
 });
 
 /* As a developer, I should be able to run the gulp build command 
